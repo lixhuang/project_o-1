@@ -6,7 +6,7 @@ long_mode_start:
 	extern rust_main
 	call rust_main
 
-.os_returned
+.os_returned:
 	; rust main returned, print 'OS returned!'
 	mov rax, 0x4f724f204f534f4f
 	mov [0xb8000], rax

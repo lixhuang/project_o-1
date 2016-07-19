@@ -160,7 +160,7 @@ set_up_SSE:
 	mov cr4, eax
 
 	ret
-.no_SSE
+.no_SSE:
 	mov al, "a"
 	jmp error
 
