@@ -9,9 +9,9 @@ grub_cfg := src/arch/$(arch)/grub.cfg
 assembly_source_files := $(wildcard src/arch/$(arch)/*.asm)
 assembly_object_files := $(patsubst src/arch/$(arch)/%.asm, build/arch/$(arch)/%.o, $(assembly_source_files))
 
-.PHONY: all clean run iso cargo
+.PHONY: all clean run iso cargo style
 
-all: $(kernel)
+all: style $(kernel)
 
 clean:
 	@cargo clean
@@ -39,3 +39,6 @@ cargo:
 build/arch/$(arch)/%.o: src/arch/$(arch)/%.asm
 	@mkdir -p $(shell dirname $@)
 	@nasm -f elf64 $< -o $@
+
+style:
+	@sh ./style_check.sh

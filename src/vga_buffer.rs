@@ -53,6 +53,7 @@ pub struct Writer {
 
 impl ::core::fmt::Write for Writer {
     // add code here
+////
     fn write_str(&mut self, s: &str) -> ::core::fmt::Result {
         for byte in s.bytes() {
             self.write_byte(byte);
@@ -66,24 +67,24 @@ impl Writer {
         match byte {
             b'\n' => self.new_line(),
             byte => {
-                if self.column_position >= BUFFER_WIDTH{
+                if self.column_position >= BUFFER_WIDTH {
                     self.new_line();
                 }
 
                 let row = BUFFER_HEIGHT - 1;
                 let col = self.column_position;
 
-                self.buffer().chars[row][col] = ScreenChar{
+                self.buffer().chars[row][col] = ScreenChar {
                     ascii_char: byte,
                     color_code: self.color_code,
                 };
-                self.column_position += 1;		
+                self.column_position += 1;
             }
         }
     }
 
     fn buffer(&mut self) -> &mut Buffer {
-        unsafe{self.buffer.get_mut()}
+        unsafe { self.buffer.get_mut() }
     }
 
     fn new_line(&mut self) {
@@ -113,11 +114,11 @@ pub static WRITER: Mutex<Writer> = Mutex::new(Writer {
 });
 
 macro_rules! print {
-    ($($arg:tt)*) => ({
+    ($($arg:tt)*) => ( {
         use core::fmt::Write;
         let mut writer = $crate::vga_buffer::WRITER.lock();
         writer.write_fmt(format_args!($($arg)*)).unwrap();
-    });
+    } );
 }
 
 macro_rules! println {
